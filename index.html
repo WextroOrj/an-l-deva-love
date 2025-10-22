@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anıl 💞 Deva</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #faf6ff, #ffe6f0, #f9f9ff);
+      background-size: 200% 200%;
+      animation: gradientShift 6s ease infinite;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #ff4d88;
+      text-shadow: 0 2px 8px rgba(255, 77, 136, 0.3);
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    #buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 15px 35px;
+      font-size: 1.3rem;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    #yesBtn {
+      background: #ffffff;
+      color: #ff4d88;
+      font-weight: 600;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+      background: #ff4d88;
+      color: #fff;
+    }
+
+    #noBtn {
+      background-color: #ff4d88;
+      color: white;
+      position: relative;
+    }
+
+    /* Cam kutu + glow pulse */
+    #messageBox {
+      display: none;
+      padding: 60px 80px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(255, 100, 150, 0.4), 0 0 60px rgba(255, 150, 200, 0.2);
+      text-align: center;
+      animation: fadeInUp 1s ease forwards, glowPulse 3s ease-in-out infinite;
+      position: relative;
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 25px rgba(255, 100, 150, 0.4), 0 0 50px rgba(255, 150, 200, 0.2); }
+      50% { box-shadow: 0 0 40px rgba(255, 80, 150, 0.6), 0 0 80px rgba(255, 150, 200, 0.4); }
+      100% { box-shadow: 0 0 25px rgba(255, 100, 150, 0.4), 0 0 50px rgba(255, 150, 200, 0.2); }
+    }
+
+    #messageBox h2 {
+      font-size: 2.5rem;
+      color: #ff2e72;
+      margin: 0;
+      text-shadow: 0 0 15px rgba(255,46,114,0.4);
+      letter-spacing: 1px;
+      font-weight: 600;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Kalpler yukarı süzülecek */
+    @keyframes floatHearts {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 22px;
+      animation: floatHearts 4s linear forwards;
+      filter: drop-shadow(0 0 6px rgba(255, 85, 170, 0.4));
+    }
+
+    /* Tiny glowing hearts */
+    .tinyHeart {
+      position: absolute;
+      font-size: 12px;
+      color: #ff88aa;
+      text-shadow: 0 0 6px #ff88aa, 0 0 12px #ff4d88;
+      opacity: 0.8;
+      animation: tinyHeartMove 3s linear forwards;
+    }
+
+    @keyframes tinyHeartMove {
+      from { transform: translateY(0) scale(0.5); opacity: 0.8; }
+      to { transform: translateY(-80px) scale(1); opacity: 0; }
+    }
+
+    /* Emoji izi */
+    .emojiTrail {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0.8;
+      animation: fall 1.5s linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(30px); opacity: 0; }
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 2rem; }
+      button { font-size: 1.1rem; padding: 12px 25px; }
+      #messageBox { padding: 40px 40px; border-radius: 20px; }
+      #messageBox h2 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Anıl 💞 Deva — Barışalım mı? 💗</h1>
+  <div id="buttons">
+    <button id="yesBtn">Evet 💖</button>
+    <button id="noBtn">Hayır 🙅‍♀️</button>
+  </div>
+
+  <div id="messageBox">
+    <h2>Seni çooooook seviyorum Deva! 💘</h2>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const messageBox = document.getElementById('messageBox');
+
+    let angryLevel = 0;
+    const funnyMessages = [
+      "Yapma aşkııım 😢",
+      "Cidden mi 🙄",
+      "Bak kaçıyorum 😜",
+      "Yakalamaya çalış bakalım 😂",
+      "Pes et artık 😩"
+    ];
+
+    noBtn.addEventListener('mouseover', (e) => {
+      const x = Math.random() * (window.innerWidth - 200);
+      const y = Math.random() * (window.innerHeight - 200);
+      noBtn.style.position = "absolute";
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+
+      const emoji = document.createElement("div");
+      emoji.textContent = Math.random() > 0.5 ? "💨" : "😜";
+      emoji.classList.add("emojiTrail");
+      emoji.style.left = `${e.pageX}px`;
+      emoji.style.top = `${e.pageY}px`;
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 1500);
+
+      if (angryLevel < funnyMessages.length) {
+        yesBtn.textContent = funnyMessages[angryLevel];
+        angryLevel++;
+      } else {
+        yesBtn.textContent = "Tamam barışalım 😅";
+      }
+    });
+
+    yesBtn.addEventListener('click', () => {
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+      document.querySelector("h1").style.display = "none";
+      messageBox.style.display = "block";
+      createHearts();
+      createTinyHearts();
+    });
+
+    function createHearts() {
+      for (let i = 0; i < 45; i++) {
+        const heart = document.createElement("div");
+        heart.textContent = "💖";
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.bottom = "0";
+        heart.style.fontSize = Math.random() * 22 + 15 + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }
+    }
+
+    // Tiny glowing hearts
+    function createTinyHearts() {
+      for (let i = 0; i < 30; i++) {
+        const tHeart = document.createElement("div");
+        tHeart.textContent = "💗";
+        tHeart.classList.add("tinyHeart");
+        tHeart.style.left = messageBox.offsetLeft + Math.random() * messageBox.offsetWidth + "px";
+        tHeart.style.top = messageBox.offsetTop + Math.random() * messageBox.offsetHeight + "px";
+        tHeart.style.animationDelay = (Math.random() * 2) + "s";
+        document.body.appendChild(tHeart);
+        setTimeout(() => tHeart.remove(), 3000);
+      }
+    }
+  </script>
+
+</body>
+</html>

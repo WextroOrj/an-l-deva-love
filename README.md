@@ -1,1 +1,0 @@
-# anıl-deva-love
